@@ -13,7 +13,7 @@ export class MovieService {
   constructor(private http: HttpClient) {}
 
   getAlphabetLetters(): Observable<AlphabetLetter[]> {
-    return this.http.get<ApiResponse<AlphabetLetter[]>>(`${this.apiUrl}/movies/letters`)
+    return this.http.get<ApiResponse<AlphabetLetter[]>>(`${this.apiUrl}/movies/alphabet`)
       .pipe(
         map(response => response.data || []),
         catchError(this.handleError)
@@ -25,7 +25,7 @@ export class MovieService {
       .set('page', page.toString())
       .set('limit', limit.toString());
 
-    return this.http.get<ApiResponse<MoviesResponse>>(`${this.apiUrl}/movies/letter/${letter}`, { params })
+    return this.http.get<ApiResponse<MoviesResponse>>(`${this.apiUrl}/movies/by-letter/${letter}`, { params })
       .pipe(
         map(response => response.data || { movies: [], total: 0, page: 1, totalPages: 0 }),
         catchError(this.handleError)
