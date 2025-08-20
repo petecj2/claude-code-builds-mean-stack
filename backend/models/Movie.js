@@ -32,7 +32,8 @@ class Movie {
         },
         {
           $group: {
-            _id: "$firstLetter"
+            _id: "$firstLetter",
+            count: { $sum: 1 }
           }
         },
         {
@@ -41,7 +42,12 @@ class Movie {
       ];
 
       const result = await db.collection(this.collection).aggregate(pipeline).toArray();
-      return result.map(item => item._id).filter(letter => /^[A-Z0-9]$/.test(letter));
+      return result
+        .filter(item => /^[A-Z0-9]$/.test(item._id))
+        .map(item => ({
+          letter: item._id,
+          count: item.count
+        }));
     } catch (error) {
       throw new Error(`Error fetching alphabet list: ${error.message}`);
     }
