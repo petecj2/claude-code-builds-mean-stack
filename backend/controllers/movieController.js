@@ -59,8 +59,12 @@ class MovieController {
       
       res.status(200).json({
         success: true,
-        data: result.movies,
-        pagination: result.pagination,
+        data: {
+          movies: result.movies,
+          total: result.total,
+          page: result.page,
+          totalPages: result.totalPages
+        },
         message: `Movies starting with "${letter.toUpperCase()}" retrieved successfully`
       });
     } catch (error) {

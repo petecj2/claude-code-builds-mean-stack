@@ -88,13 +88,9 @@ class Movie {
 
       return {
         movies,
-        pagination: {
-          currentPage: page,
-          totalPages,
-          totalCount,
-          hasNextPage: page < totalPages,
-          hasPrevPage: page > 1
-        }
+        total: totalCount,
+        page: page,
+        totalPages: totalPages
       };
     } catch (error) {
       throw new Error(`Error fetching movies by letter: ${error.message}`);
