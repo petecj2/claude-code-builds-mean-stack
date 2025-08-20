@@ -1,0 +1,140 @@
+<div class="container movie-detail-container">
+  <div class="loading-spinner" *ngIf="loading">
+    <mat-spinner diameter="50" color="primary"></mat-spinner>
+  </div>
+
+  <div class="error-message" *ngIf="error && !loading">
+    {{ error }}
+    <button class="btn-primary retry-btn" (click)="loadMovie()">
+      Retry
+    </button>
+  </div>
+
+  <div class="movie-detail-content" *ngIf="movie && !loading && !error">
+    <!-- Header with back button -->
+    <header class="movie-header">
+      <button mat-icon-button class="back-button" (click)="onBack()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h1 class="movie-title">{{ movie.title }}</h1>
+    </header>
+
+    <!-- Main movie information -->
+    <div class="movie-main">
+      <div class="movie-poster-section">
+        <div class="movie-poster">
+          <img 
+            [src]="getMoviePoster(movie)" 
+            [alt]="movie.title"
+            (error)="onImageError($event)"
+          />
+        </div>
+      </div>
+
+      <div class="movie-info-section">
+        <div class="movie-meta">
+          <div class="meta-item">
+            <span class="meta-label">Year:</span>
+            <span class="meta-value">{{ getReleaseYear(movie) }}</span>
+          </div>
+          <div class="meta-item" *ngIf="movie.rated">
+            <span class="meta-label">Rated:</span>
+            <span class="meta-value">{{ movie.rated }}</span>
+          </div>
+          <div class="meta-item" *ngIf="movie.runtime">
+            <span class="meta-label">Runtime:</span>
+            <span class="meta-value">{{ getMovieRuntime(movie) }}</span>
+          </div>
+          <div class="meta-item" *ngIf="movie.released">
+            <span class="meta-label">Released:</span>
+            <span class="meta-value">{{ formatReleaseDate(movie) }}</span>
+          </div>
+        </div>
+
+        <!-- Ratings -->
+        <div class="movie-ratings" *ngIf="movie.imdb?.rating || movie.metacritic || getTomatoesRating(movie)">
+          <h3>Ratings</h3>
+          <div class="ratings-grid">
+            <div class="rating-item" *ngIf="movie.imdb?.rating">
+              <div class="rating-source">IMDb</div>
+              <div class="rating-score imdb">
+                <mat-icon>star</mat-icon>
+                {{ getMovieRating(movie) }}/10
+              </div>
+              <div class="rating-votes" *ngIf="movie.imdb.votes">
+                {{ movie.imdb.votes | number }} votes
+              </div>
+            </div>
+            
+            <div class="rating-item" *ngIf="getMetacriticScore(movie)">
+              <div class="rating-source">Metacritic</div>
+              <div class="rating-score metacritic">
+                {{ getMetacriticScore(movie) }}/100
+              </div>
+            </div>
+            
+            <div class="rating-item" *ngIf="getTomatoesRating(movie)">
+              <div class="rating-source">Rotten Tomatoes</div>
+              <div class="rating-score tomatoes">
+                {{ getTomatoesRating(movie) }}/10
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Genres -->
+        <div class="movie-genres" *ngIf="movie.genres && movie.genres.length > 0">
+          <h3>Genres</h3>
+          <mat-chip-set>
+            <mat-chip *ngFor="let genre of movie.genres" class="genre-chip">
+              {{ genre }}
+            </mat-chip>
+          </mat-chip-set>
+        </div>
+
+        <!-- Plot -->
+        <div class="movie-plot" *ngIf="movie.fullplot || movie.plot">
+          <h3>Plot</h3>
+          <p>{{ movie.fullplot || movie.plot }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Additional Information -->
+    <div class="movie-details">
+      <div class="detail-section" *ngIf="movie.directors && movie.directors.length > 0">
+        <h3>Director(s)</h3>
+        <p>{{ getDirectors(movie) }}</p>
+      </div>
+
+      <div class="detail-section" *ngIf="movie.writers && movie.writers.length > 0">
+        <h3>Writer(s)</h3>
+        <p>{{ getWriters(movie) }}</p>
+      </div>
+
+      <div class="detail-section" *ngIf="movie.cast && movie.cast.length > 0">
+        <h3>Cast</h3>
+        <mat-chip-set>
+          <mat-chip *ngFor="let actor of getCast(movie)" class="cast-chip">
+            {{ actor }}
+          </mat-chip>
+        </mat-chip-set>
+      </div>
+
+      <div class="detail-section" *ngIf="movie.countries && movie.countries.length > 0">
+        <h3>Country</h3>
+        <p>{{ getCountries(movie) }}</p>
+      </div>
+
+      <div class="detail-section" *ngIf="movie.languages && movie.languages.length > 0">
+        <h3>Language(s)</h3>
+        <p>{{ getLanguages(movie) }}</p>
+      </div>
+
+      <div class="detail-section" *ngIf="movie.awards">
+        <h3>Awards</h3>
+        <p>{{ getAwardsText(movie) }}</p>
+      </div>
+    </div>
+  </div>
+</div>

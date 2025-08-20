@@ -1,0 +1,34 @@
+<div class="container home-container">
+  <header class="home-header">
+    <h1 class="home-title">Movie Browser</h1>
+    <p class="home-subtitle">Explore movies by their first letter</p>
+  </header>
+
+  <div class="loading-spinner" *ngIf="loading">
+    <mat-spinner diameter="50" color="primary"></mat-spinner>
+  </div>
+
+  <div class="error-message" *ngIf="error && !loading">
+    {{ error }}
+    <button class="btn-primary retry-btn" (click)="loadAlphabetLetters()">
+      Retry
+    </button>
+  </div>
+
+  <div class="alphabet-grid" *ngIf="!loading && !error">
+    <div 
+      class="letter-card" 
+      *ngFor="let letterData of letters; trackBy: trackByLetter"
+      (click)="onLetterClick(letterData.letter)"
+      [class.no-movies]="letterData.count === 0"
+    >
+      <div class="letter">{{ letterData.letter }}</div>
+      <div class="count" *ngIf="letterData.count > 0">
+        {{ letterData.count }} movies
+      </div>
+      <div class="count no-movies-text" *ngIf="letterData.count === 0">
+        No movies
+      </div>
+    </div>
+  </div>
+</div>

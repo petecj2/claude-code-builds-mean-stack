@@ -1,0 +1,1 @@
+claude mcp add mongodb -- npx -y mongodb-mcp-server --connectionString mongodb+srv://vibe1:COWsPT9GVoF1s00a@cluster55247.b9ee65w.mongodb.net

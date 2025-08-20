@@ -1,0 +1,79 @@
+<div class="container movies-container">
+  <header class="movies-header">
+    <button mat-icon-button class="back-button" (click)="onBackToHome()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="header-content">
+      <h1 class="movies-title">Movies starting with "{{ letter }}"</h1>
+      <p class="movies-count" *ngIf="!loading && !error">
+        {{ totalMovies }} movies found
+      </p>
+    </div>
+  </header>
+
+  <div class="loading-spinner" *ngIf="loading">
+    <mat-spinner diameter="50" color="primary"></mat-spinner>
+  </div>
+
+  <div class="error-message" *ngIf="error && !loading">
+    {{ error }}
+    <button class="btn-primary retry-btn" (click)="loadMovies()">
+      Retry
+    </button>
+  </div>
+
+  <div class="movies-content" *ngIf="!loading && !error">
+    <div class="movies-grid" *ngIf="movies.length > 0">
+      <div 
+        class="movie-card" 
+        *ngFor="let movie of movies; trackBy: trackByMovieId"
+        (click)="onMovieClick(movie._id)"
+      >
+        <div class="movie-poster">
+          <img 
+            [src]="getMoviePoster(movie)" 
+            [alt]="movie.title"
+            (error)="onImageError($event)"
+            loading="lazy"
+          />
+          <div class="movie-overlay">
+            <mat-icon class="play-icon">play_circle_filled</mat-icon>
+          </div>
+        </div>
+        
+        <div class="movie-info">
+          <h3 class="movie-title">{{ movie.title }}</h3>
+          <div class="movie-meta">
+            <span class="movie-year">{{ movie.year }}</span>
+            <span class="movie-rating" *ngIf="movie.imdb?.rating">
+              <mat-icon class="star-icon">star</mat-icon>
+              {{ getMovieRating(movie) }}
+            </span>
+          </div>
+          <p class="movie-genres">{{ getMovieGenres(movie) }}</p>
+          <p class="movie-plot" *ngIf="movie.plot">{{ movie.plot }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="no-movies" *ngIf="movies.length === 0">
+      <mat-icon class="no-movies-icon">movie</mat-icon>
+      <h2>No movies found</h2>
+      <p>There are no movies starting with "{{ letter }}" in our database.</p>
+      <button class="btn-primary" (click)="onBackToHome()">
+        Back to Home
+      </button>
+    </div>
+
+    <mat-paginator
+      *ngIf="movies.length > 0 && totalPages > 1"
+      [length]="totalMovies"
+      [pageSize]="moviesPerPage"
+      [pageIndex]="currentPage - 1"
+      [pageSizeOptions]="[15, 30, 50]"
+      [showFirstLastButtons]="true"
+      (page)="onPageChange($event)"
+      class="movies-paginator">
+    </mat-paginator>
+  </div>
+</div>

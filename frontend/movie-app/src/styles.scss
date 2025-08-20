@@ -1,0 +1,104 @@
+/* MongoDB-themed global styles */
+
+// MongoDB color palette
+:root {
+  --primary-green: #00ED64;
+  --dark-green: #00684A;
+  --background-dark: #001E2B;
+  --text-light: #FFFFFF;
+  --card-background: #112733;
+  --border-accent: #21313C;
+  --error-red: #E74C3C;
+  --warning-orange: #F39C12;
+}
+
+// Global styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--background-dark);
+  color: var(--text-light);
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+// Custom scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-accent);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--dark-green);
+}
+
+// Utility classes
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.card {
+  background-color: var(--card-background);
+  border: 1px solid var(--border-accent);
+  border-radius: 8px;
+  padding: 16px;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 237, 100, 0.1);
+}
+
+.btn-primary {
+  background-color: var(--primary-green);
+  color: var(--background-dark);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--dark-green);
+  transform: translateY(-1px);
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.error-message {
+  color: var(--error-red);
+  text-align: center;
+  padding: 20px;
+  background-color: rgba(231, 76, 60, 0.1);
+  border-radius: 8px;
+  border: 1px solid var(--error-red);
+  margin: 20px 0;
+}

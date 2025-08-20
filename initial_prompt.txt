@@ -1,0 +1,8 @@
+Use the MCP server to take a look at the 'sample_mflix', specifically at the 'movies' collection. 
+Build a well-formed MEAN stack application that for now has 3 pages. Page 1 is the root home page
+that lists the alphabet. When the user clicks on a letter it takes them to Page 2, which shows a
+subset of the movies that begin with that letter on well organized cards displaying 15 movies at a time.
+When the user clicks on a card, it takes them to Page 3, which shows all the information associated 
+with a movie. Make this site pleasant to work with and use the same color scheme as mongodb.com. 
+The code should be well organized with front end and back end code in different folders.
+When having the code connect to MongoDB Atlas, use the connection string in the root .env file.
